@@ -3,5 +3,5 @@ from django.urls import path
 from django.conf import settings
 
 urlpatterns = [
-    path("supersecret/", admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
 ]
