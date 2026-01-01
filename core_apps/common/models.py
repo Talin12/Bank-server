@@ -38,7 +38,7 @@ class ContentView(TimeStampedModel):
         blank=True, 
         verbose_name=_("Viewer IP Address")
     )
-    last_viewed_at = models.DateTimeField()
+    last_viewed = models.DateTimeField()
 
     class Meta:
         verbose_name = _("Content View")
