@@ -58,7 +58,7 @@ class CustomTokenCreateView(TokenCreateView):
 
         otp = generate_otp()
         user.set_otp(otp)
-        send_otp_email.delay(user.email, otp)
+        send_otp_email(user.email, otp)
 
         logger.info(f"OTP sent for login to user: {user.email}")
 

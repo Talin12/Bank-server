@@ -182,12 +182,12 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
 }
 
-DJSOER = {
+DJOSER = {
     'USER_ID_FIELD': 'id',
     'LOGIN_FIELD': 'email',
     'TOKEN_MODEL': None,
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'SET_ACTIVATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
