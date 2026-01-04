@@ -261,7 +261,7 @@ class Profile(TimeStampedModel):
             self.signature_photo,
         ]
 
-        return all(required_fields) and self.next_of_kin.exits()
+        return all(required_fields) and self.next_of_kin.exists()
 
     def __str__(self) -> str:
         return f"{self.title} {self.user.first_name}'s Profile"
