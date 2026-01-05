@@ -15,8 +15,10 @@ urlpatterns = [
     path("api/v1/auth/", include("djoser.urls")),
     path("api/v1/auth/", include("core_apps.user_auth.urls")),
     path("api/v1/profiles/", include("core_apps.user_profile.urls")),
+    path("api/v1/accounts/", include("core_apps.accounts.urls")),
 ]
 
 admin.site.site_header = "NextGen Bank Admin"
 admin.site.site_title = "NextGen Bank Admin Portal"
 admin.site.index_title = "Welcome to NextGen Bank Admin Portal"
+
