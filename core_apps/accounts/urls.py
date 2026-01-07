@@ -7,6 +7,7 @@ from .views import (
     InitiateTransferView,
     VerifyOTPView,
     VerifySecurityQuestionView,
+    TransactionListAPIView,
 )
 
 urlpatterns = [
@@ -38,4 +39,5 @@ urlpatterns = [
         VerifySecurityQuestionView.as_view(),
         name="verify_security_question",
     ),
+    path("transactions/", TransactionListAPIView.as_view(), name="transaction_list"),
 ]
