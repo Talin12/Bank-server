@@ -22,7 +22,7 @@ ADMIN_URL = getenv('ADMIN_URL')
 EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = getenv('EMAIL_HOST')
 EMAIL_PORT = getenv('EMAIL_PORT')
-DEFAULT_EMAIL_FROM = getenv('DEFAULT_FROM_EMAIL')
+DEFAULT_FROM_EMAIL = getenv('DEFAULT_FROM_EMAIL')
 DOMAIN = getenv('DOMAIN')
 ADMIN_EMAIL = getenv("ADMIN_EMAIL")
 
