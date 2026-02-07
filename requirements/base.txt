@@ -21,3 +21,4 @@ flower==2.0.1
 django-redis==5.4.0
 reportlab==4.2.2
 whitenoise==6.6.0
+django-cors-headers==4.3.1
