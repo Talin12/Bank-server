@@ -56,20 +56,18 @@ class CustomTokenCreateView(TokenCreateView):
             )
         user.reset_failed_login_attempts()
 
-        otp = generate_otp()
-        user.set_otp(otp)
-        send_otp_email(user.email, otp)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
 
-        logger.info(f"OTP sent for login to user: {user.email}")
-
-        return Response(
-            {
-                "success": "OTP sent to your email",
-                "email": user.email,
-            },
+        response = Response(
+            {"success": "Login successful"},
             status=status.HTTP_200_OK,
         )
-
+        set_auth_cookies(response, access_token, refresh_token)
+        logger.info(f"Successful login: {user.email}")
+        return response
+    
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
 

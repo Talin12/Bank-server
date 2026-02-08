@@ -15,7 +15,6 @@ local_env_file = path.join(BASE_DIR, '.envs', '.env.production')
 if path.isfile(local_env_file):
     load_dotenv(local_env_file)
 
-# Application definition
 
 DJANGO_APPS = [
     'django.contrib.admin',
