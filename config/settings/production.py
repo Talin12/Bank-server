@@ -64,3 +64,6 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+COOKIE_SAMESITE = "None"  # Change from "Lax" to "None"
+COOKIE_SECURE = True
