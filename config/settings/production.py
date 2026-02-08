@@ -21,7 +21,7 @@ ALLOWED_HOSTS = ["*"]
 
 ADMIN_URL = getenv("ADMIN_URL")
 
-EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+# EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = getenv("EMAIL_HOST")
 EMAIL_HOST_USER = getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = getenv("SMTP_MAILGUN_PASSWORD")
