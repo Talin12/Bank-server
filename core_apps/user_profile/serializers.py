@@ -65,6 +65,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     account_currency = serializers.ChoiceField(choices=BankAccount.AccountCurrency.choices)
     account_type = serializers.ChoiceField(choices=BankAccount.AccountType.choices)
     view_count = serializers.SerializerMethodField()
+    account_number = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -183,19 +184,35 @@ class ProfileSerializer(serializers.ModelSerializer):
         return ContentView.objects.filter(
             content_type=content_type, object_id=obj.id
         ).count()
-    
+
     def get_account_number(self, obj: Profile) -> str | None:
-        # Try to find the account matching the profile's preferred currency/type
-        account = BankAccount.objects.filter(
-            user=obj.user, 
-            currency=obj.account_currency, 
-            account_type=obj.account_type
-        ).first()
-        
-        if not account:
-            account = BankAccount.objects.filter(user=obj.user).first()
+        try:
+            # Safe local import to prevent runtime circular dependency
+            from core_apps.accounts.models import BankAccount
             
-        return account.account_number if account else None
+            # Check for user existence
+            if not hasattr(obj, 'user'):
+                return None
+
+            account = None
+            
+            # 1. Try to find strict match based on profile preferences
+            if obj.account_currency and obj.account_type:
+                account = BankAccount.objects.filter(
+                    user=obj.user, 
+                    currency=obj.account_currency, 
+                    account_type=obj.account_type
+                ).first()
+            
+            # 2. Fallback: Find ANY account for this user
+            if not account:
+                account = BankAccount.objects.filter(user=obj.user).first()
+                
+            return account.account_number if account else None
+            
+        except Exception:
+            # If anything goes wrong, return None instead of 500 Error
+            return None
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
