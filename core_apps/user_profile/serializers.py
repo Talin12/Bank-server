@@ -112,6 +112,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "view_count",
             "account_currency",
             "account_type",
+            "account_number",
         ]
         read_only_fields = [
             "user",
@@ -182,6 +183,19 @@ class ProfileSerializer(serializers.ModelSerializer):
         return ContentView.objects.filter(
             content_type=content_type, object_id=obj.id
         ).count()
+    
+    def get_account_number(self, obj: Profile) -> str | None:
+        # Try to find the account matching the profile's preferred currency/type
+        account = BankAccount.objects.filter(
+            user=obj.user, 
+            currency=obj.account_currency, 
+            account_type=obj.account_type
+        ).first()
+        
+        if not account:
+            account = BankAccount.objects.filter(user=obj.user).first()
+            
+        return account.account_number if account else None
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
