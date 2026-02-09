@@ -127,7 +127,7 @@ class BankAccount(TimeStampedModel):
     def save(self, *args, **kwargs) -> None:
         if not self.account_number:
             from .utils import generate_account_number
-            self.account_number = generate_account_number()
+            self.account_number = generate_account_number(self.currency)
         
         if self.is_primary:
             BankAccount.objects.filter(user=self.user).update(is_primary=False)
