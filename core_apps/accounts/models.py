@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from core_apps.common.models import TimeStampedModel
 from decimal import Decimal, ROUND_HALF_UP
 from loguru import logger
+from .utils import generate_account_number
 
 User = get_user_model()
 
@@ -125,6 +126,9 @@ class BankAccount(TimeStampedModel):
             raise ValidationError(_("Account balance cannot be negative."))
 
     def save(self, *args, **kwargs) -> None:
+        if not self.account_number:
+            self.account_number = generate_account_number()
+        
         if self.is_primary:
             BankAccount.objects.filter(user=self.user).update(is_primary=False)
         super().save(*args, **kwargs)
