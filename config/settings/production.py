@@ -60,8 +60,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = getenv("SECURE_CONTENT_TYPE_NOSNIFF")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
+    "https://banking-frontend-seven.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://banking-frontend-seven.vercel.app",
+]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
