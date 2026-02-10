@@ -3,7 +3,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from djoser.views import TokenCreateView
-from djoser.views import User
 from loguru import logger
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -19,7 +18,8 @@ User = get_user_model()
 
 
 def set_auth_cookies(
-    response: Response, access_token: str, refresh_token: Optional[str] = None) -> None:
+    response: Response, access_token: str, refresh_token: Optional[str] = None
+) -> None:
     access_token_lifetime = settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds()
     cookie_settings = {
         "path": settings.COOKIE_PATH,
@@ -56,18 +56,18 @@ class CustomTokenCreateView(TokenCreateView):
             )
         user.reset_failed_login_attempts()
 
-        refresh = RefreshToken.for_user(user)
-        access_token = str(refresh.access_token)
-        refresh_token = str(refresh)
+        otp = generate_otp()
+        user.set_otp(otp)
+        send_otp_email(user.email, otp)
 
-        response = Response(
-            {"success": "Login successful"},
+        logger.info(f"OTP sent for login to user: {user.email}")
+
+
+        return Response(
+            {"success": "OTP sent to your email", "email": user.email},
             status=status.HTTP_200_OK,
         )
-        set_auth_cookies(response, access_token, refresh_token)
-        logger.info(f"Successful login: {user.email}")
-        return response
-    
+
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
 
@@ -80,7 +80,7 @@ class CustomTokenCreateView(TokenCreateView):
                 user.handle_failed_login_attempts()
                 failed_attempts = user.failed_login_attempts
                 logger.error(
-                    f"Failed login attempts: {failed_attempts}  for user: {email}"
+                    f"Failed login attempts: {failed_attempts} for user: {email}"
                 )
                 if failed_attempts >= settings.LOGIN_ATTEMPTS:
                     return Response(

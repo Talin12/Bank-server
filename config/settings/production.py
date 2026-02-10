@@ -22,10 +22,13 @@ ALLOWED_HOSTS = ["*"]
 ADMIN_URL = getenv("ADMIN_URL")
 
 # EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 EMAIL_HOST = getenv("EMAIL_HOST")
-EMAIL_HOST_USER = getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = getenv("SMTP_MAILGUN_PASSWORD")
 EMAIL_PORT = getenv("EMAIL_PORT")
+EMAIL_HOST_USER = getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = getenv("EMAIL_HOST_PASSWORD")
+
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = getenv("DEFAULT_FROM_EMAIL")
 DOMAIN = getenv("DOMAIN")
