@@ -1,6 +1,6 @@
 from os import getenv, path
 from dotenv import load_dotenv
-from .base import *  # noqa
+from .base import * # noqa
 from .base import BASE_DIR
 
 
@@ -21,7 +21,8 @@ ALLOWED_HOSTS = ["*"]
 
 ADMIN_URL = getenv("ADMIN_URL")
 
-# EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+# --- EMAIL SETTINGS ---
+# Use SMTP to actually send emails
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = getenv("EMAIL_HOST")
@@ -35,8 +36,6 @@ DOMAIN = getenv("DOMAIN")
 ADMIN_EMAIL = getenv("ADMIN_EMAIL")
 
 MAX_UPLOAD_SIZE = 1 * 1024 * 1024
-
-CSRF_TRUSTED_ORIGINS = []
 
 LOCKOUT_DURATION = timedelta(minutes=10)
 
@@ -71,7 +70,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://banking-frontend-seven.vercel.app",
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-COOKIE_SAMESITE = "None"  # Change from "Lax" to "None"
+COOKIE_SAMESITE = "None"
 COOKIE_SECURE = True
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True

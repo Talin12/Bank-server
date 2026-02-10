@@ -194,14 +194,14 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SEND_ACTIVATION_EMAIL': False,  # ✓ This disables emails
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,  # Disable this too (no Celery)
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,  # Disable this too (no Celery)
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'PASSWORD_REST_CONFIRM_URL': 'password-reset/{uid}/{token}',
     'SERIALIZERS': {
         'user_create': 'core_apps.user_auth.serializers.UserCreateSerializer',
     },
-    'SEND_CONFIRMATION_EMAIL': False,  # Add this
+    'SEND_CONFIRMATION_EMAIL': True,  # Add this
 }
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
