@@ -188,20 +188,18 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    'USER_ID_FIELD': 'id',
-    'LOGIN_FIELD': 'email',
-    'TOKEN_MODEL': None,
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'SEND_ACTIVATION_EMAIL': False,  # ✓ This disables emails
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,  # Disable this too (no Celery)
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'PASSWORD_REST_CONFIRM_URL': 'password-reset/{uid}/{token}',
-    'SERIALIZERS': {
-        'user_create': 'core_apps.user_auth.serializers.UserCreateSerializer',
+    "USER_ID_FIELD": "id",
+    "LOGIN_FIELD": "email",
+    "TOKEN_MODEL": None,
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "SEND_ACTIVATION_EMAIL": True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    "PASSWORD_RESET_CONFIRM_RETYPE": True,
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
+    "SERIALIZERS": {
+        "user_create": "core_apps.user_auth.serializers.UserCreateSerializer",
     },
-    'SEND_CONFIRMATION_EMAIL': True,  # Add this
 }
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
