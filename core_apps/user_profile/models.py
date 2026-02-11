@@ -144,7 +144,10 @@ class Profile(TimeStampedModel):
     )
     nationality = models.CharField(_("Nationality"), max_length=30, default="Unknown")
     phone_number = PhoneNumberField(
-        _("Phone Number"), max_length=30, default=settings.DEFAULT_PHONE_NUMBER
+        _("Phone Number"), 
+        max_length=30, 
+        default=settings.DEFAULT_PHONE_NUMBER,
+        blank=True  # Allow blank to prevent validation errors on auto-creation
     )
     address = models.CharField(_("Address"), max_length=100, default="Unknown")
     city = models.CharField(_("City"), max_length=50, default="Unknown")
@@ -236,7 +239,11 @@ class Profile(TimeStampedModel):
                 raise ValidationError(_("ID expiry date must come after issue date."))
 
     def save(self, *args: Any, **kwargs: Any) -> None:
-        self.full_clean()
+        # Only run full_clean if skip_validation is not True
+        # This allows auto-creation to bypass validation
+        skip_validation = kwargs.pop('skip_validation', False)
+        if not skip_validation:
+            self.full_clean()
         super().save(*args, **kwargs)
 
     def is_complete_with_next_of_kin(self):
@@ -327,7 +334,6 @@ class NextOfKin(TimeStampedModel):
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} - Next of Kin for {self.profile.user.full_name}"
 
-# Create your models here.
     class Meta:
         constraints = [
             models.UniqueConstraint(

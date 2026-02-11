@@ -1,5 +1,6 @@
 from os import getenv, path
 from dotenv import load_dotenv
+from datetime import timedelta
 from .base import * # noqa
 from .base import BASE_DIR
 
@@ -22,8 +23,9 @@ ALLOWED_HOSTS = ["*"]
 ADMIN_URL = getenv("ADMIN_URL")
 
 # --- EMAIL SETTINGS ---
-# Use SMTP to actually send emails
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# Use Celery backend to send emails asynchronously (prevents blocking registration)
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+
 
 EMAIL_HOST = getenv("EMAIL_HOST")
 EMAIL_PORT = getenv("EMAIL_PORT")
