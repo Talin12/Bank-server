@@ -26,6 +26,7 @@ ADMIN_URL = getenv("ADMIN_URL")
 # Use Celery backend to send emails asynchronously (prevents blocking registration)
 EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
+CELERY_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = getenv("EMAIL_HOST")
 EMAIL_PORT = getenv("EMAIL_PORT")
