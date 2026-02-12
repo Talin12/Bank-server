@@ -29,7 +29,7 @@ class GenericJSONRenderer(JSONRenderer):
         errors = data.get("errors", None)
 
         if errors is not None:
-            return super(GennericJSONRenderer, self).render(data)
+            return super(GenericJSONRenderer, self).render(data)
         
         return json.dumps({"status_code": status_code, object_label: data}).encode(self.charset)
 
