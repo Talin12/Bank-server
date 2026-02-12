@@ -64,7 +64,7 @@ class CustomTokenCreateView(TokenCreateView):
 
 
         return Response(
-            {"success": str("OTP sent to your email"), "email": user.email},
+            {"success": "OTP sent to your email", "email": user.email},
             status=status.HTTP_200_OK,
         )
 
