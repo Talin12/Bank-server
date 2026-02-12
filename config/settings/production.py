@@ -24,7 +24,7 @@ ADMIN_URL = getenv("ADMIN_URL")
 
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 
-CELERY_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# CELERY_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # EMAIL_HOST = getenv("EMAIL_HOST")
 # EMAIL_PORT = getenv("EMAIL_PORT")
