@@ -80,3 +80,6 @@ COOKIE_SAMESITE = "None"
 COOKIE_SECURE = True
 
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+DOMAIN = "banking-frontend-seven.vercel.app"  # No https://
+SITE_NAME = "NextGen Bank"
