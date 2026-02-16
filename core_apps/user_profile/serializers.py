@@ -66,6 +66,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     account_type = serializers.ChoiceField(choices=BankAccount.AccountType.choices)
     view_count = serializers.SerializerMethodField()
     account_number = serializers.SerializerMethodField()
+    balance = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -114,6 +115,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "account_currency",
             "account_type",
             "account_number",
+            "balance",
         ]
         read_only_fields = [
             "user",
@@ -213,6 +215,34 @@ class ProfileSerializer(serializers.ModelSerializer):
         except Exception:
             # If anything goes wrong, return None instead of 500 Error
             return None
+
+    def get_balance(self, obj: Profile) -> str:
+        try:
+            from core_apps.accounts.models import BankAccount
+            
+            if not hasattr(obj, 'user'):
+                return "0.00"
+
+            account = None
+            
+            # Find matching account based on preferences
+            if obj.account_currency and obj.account_type:
+                account = BankAccount.objects.filter(
+                    user=obj.user, 
+                    currency=obj.account_currency, 
+                    account_type=obj.account_type
+                ).first()
+            
+            # Fallback: get primary or any account
+            if not account:
+                account = BankAccount.objects.filter(
+                    user=obj.user
+                ).order_by('-is_primary', '-created_at').first()
+                
+            return str(account.account_balance) if account else "0.00"
+            
+        except Exception:
+            return "0.00"
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
