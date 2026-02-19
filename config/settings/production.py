@@ -69,6 +69,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
     "https://banking-frontend-seven.vercel.app",
+    "https://banking-frontend-git-main-talin-dagas-projects.vercel.app", 
 ]
 CORS_ALLOW_CREDENTIALS = True
 
