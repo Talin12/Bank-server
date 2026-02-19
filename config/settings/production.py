@@ -74,6 +74,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://banking-frontend-seven.vercel.app",
+    "https://banking-frontend-git-main-talin-dagas-projects.vercel.app"
 ]
 
 COOKIE_SAMESITE = "None"
